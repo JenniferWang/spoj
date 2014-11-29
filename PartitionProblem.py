@@ -3,7 +3,6 @@ def partition(arr, summ):
 	http://www.geeksforgeeks.org/dynamic-programming-set-18-partition-problem/
 	"""
 	n = len(arr)
-	# key: search until i th element
 	pre = [False for x in range(summ + 1)]
 	pre[0] = True
 
@@ -18,10 +17,11 @@ def partition(arr, summ):
 		pre = curr
 	return pre[-1]
 	
-def main(arr):
+def partition_main(arr):
 	summ = sum(arr)
 	if summ % 2 == 1:
 		return False
 	return partition(arr, summ / 2)
 
-print main([3, 1, 1, 2, 2, 1])
+print partition_main([3, 1, 1, 2, 2, 1]) == True
+

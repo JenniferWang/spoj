@@ -21,6 +21,7 @@ def optCost(freqs):
 
   return cost[0][n - 1]
 
+
 def main():
   #g=sys.stdin
   g = open("OptimalBST", "r") 

@@ -22,9 +22,7 @@ class Haffman():
 			heappush(heap, [left[0] + right[0]] + left[1:] + right[1:])
 
 		print heap
-
-
-
+		
 	def decode(self, text):
 		pass
 

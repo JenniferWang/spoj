@@ -1,34 +1,44 @@
 #https://vijos.org/p/1100
-def addingBinaryTree(values, n):
-  scores = [[1 for y in range(n)] for x in range(n)]
-  choices = [[None for y in range(n)] for x in range(n)]
+class AddingBinaryTree():
+  def __init__(self, values, n):
+    self.values = values
+    self.n = n
+    self.preorderResult = []
 
-  for m in range(n):
-    scores[m][m] = values[m]
-    choices[m][m] = m
+  def addingBinaryTree(self):
+    n = self.n
+    scores = [[None for y in range(n)] for x in range(n)]
+    choices = [[None for y in range(n)] for x in range(n)]
 
-  for length in range(2, n + 1):
-    for start in range(n - length + 1):
-      for k in range(start, start + length):
-        if k == start:
-          curr_score = scores[k + 1][start + length - 1] + values[k]
-        elif k == start + length - 1:
-          curr_score = scores[start][k - 1] + values[k]
-        else:
-          curr_score = scores[start][k - 1] * scores[k + 1][start + length - 1] + values[k]
-        if curr_score > scores[start][start + length - 1]:
-          choices[start][start + length - 1] = k
-          scores[start][start + length - 1] = curr_score
+    for m in range(n):
+      scores[m][m] = self.values[m]
+      choices[m][m] = m
 
-  print scores[0][n - 1]
-  return choices
+    for length in range(2, n + 1):
+      for start in range(n - length + 1):
+        if not scores[start][start + length - 1]:
+          scores[start][start + length - 1] = float('-inf')
+        for k in range(start, start + length):
+          if k == start:
+            curr_score = scores[k + 1][start + length - 1] + self.values[k]
+          elif k == start + length - 1:
+            curr_score = scores[start][k - 1] + self.values[k]
+          else:
+            curr_score = scores[start][k - 1] * scores[k + 1][start + length - 1] + self.values[k]
+          if curr_score > scores[start][start + length - 1]:
+            choices[start][start + length - 1] = k
+            scores[start][start + length - 1] = curr_score
 
-def preorderPrint(n, m, preorderResult, values, choices):
-  preorderResult.append(choices[n][m] + 1)
-  if choices[n][m] - 1 >= n :
-    preorderPrint(n, choices[n][m] - 1, preorderResult, values, choices)
-  if choices[n][m] + 1 <= m :
-    preorderPrint(choices[n][m] + 1, m, preorderResult, values, choices)
+    self.choices = choices
+    self.scores = scores[0][n - 1]
+    
+
+  def preorderPrint(self, n, m):
+    self.preorderResult.append(self.choices[n][m] + 1)
+    if self.choices[n][m] - 1 >= n :
+      self.preorderPrint(n, self.choices[n][m] - 1)
+    if self.choices[n][m] + 1 <= m :
+      self.preorderPrint(self.choices[n][m] + 1, m)
 
 def main():
   #g=sys.stdin
@@ -40,10 +50,12 @@ def main():
   numNodes = int(s[0])
   values = map(int,s[1].split())
 
-  choices = addingBinaryTree(values, numNodes)
-  preorderResult = []
-  preorderPrint(0, numNodes - 1, preorderResult, values, choices)
-  print ' '.join([str(item) for item in preorderResult])
+  tree = AddingBinaryTree(values, numNodes)
+  tree.addingBinaryTree()
+  tree.preorderPrint(0, numNodes - 1)
+  print tree.scores
+  for item in tree.preorderResult:
+    print item,
 
 if __name__=='__main__':
   main()

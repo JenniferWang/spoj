@@ -11,7 +11,7 @@ class DisjointSet():
       self.root[val] = self.root[self.root[val]]
       val = self.root[val]
     return val
-    
+
   def union(self, val1, val2):
     val1 = self.findRoot(val1)
     val2 = self.findRoot(val2)
@@ -30,9 +30,12 @@ class DisjointSet():
     val2 = self.findRoot(val2)
     return val1 == val2
 
+  def getNumOfDisjointSet(self):
+    return self.num
+
 def main():
-  g=sys.stdin
-  #g = open("FOXLINGS", "r") 
+  #g=sys.stdin
+  g = open("FOXLINGS", "r") 
   s=g.read().splitlines()
   while '' in s: s.remove('')
   while '\n' in s: s.remove('\n')
@@ -45,7 +48,7 @@ def main():
     l = s[edge].split( )
     djSet.union(int(l[0]) - 1, int(l[1]) - 1)
 
-  print djSet.num
+  print djSet.getNumOfDisjointSet()
    
 if __name__ == '__main__':
   main()

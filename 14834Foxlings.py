@@ -25,11 +25,6 @@ class DisjointSet():
       self.sz[val2] += self.sz[val1]
     self.num -= 1
 
-  def find(self, val1, val2):
-    val1 = self.findRoot(val1)
-    val2 = self.findRoot(val2)
-    return val1 == val2
-
   def getNumOfDisjointSet(self):
     return self.num
 
@@ -48,7 +43,7 @@ def main():
     l = s[edge].split( )
     djSet.union(int(l[0]) - 1, int(l[1]) - 1)
 
-  print djSet.getNumOfDisjointSet()
+  print djSet.x`getNumOfDisjointSet()
    
 if __name__ == '__main__':
   main()

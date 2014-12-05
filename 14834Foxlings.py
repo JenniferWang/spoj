@@ -1,58 +1,57 @@
 # Practice disjoint set
+# http://www.spoj.com/problems/FOXLINGS/
 class DisjointSet():
-	def __init__(self, n):
-		self.data = [x for x in xrange(n)]
-		self.id = [x for x in xrange(n)]
-		self.num = n # number of disjoint sets
-		self.sz = [1 for x in xrange(n)]
-		self.n = n
-	def findRoot(self, val):
-		if val not in range(self.n):
-			print 'val1 or val2 out of range'
-			return
-		while val != self.id[val]:
-			self.id[val] = self.id[self.id[val]]
-			val = self.id[val]
-		return val
-	def union(self, val1, val2):
-		if val1 not in range(self.n) or val2 not in range(self.n):
-			print 'val1 or val2 out of range'
-			return
-		val1 = self.findRoot(val1)
-		val2 = self.findRoot(val2)
-		if val1 == val2:
-			return
-		if self.sz[val1] > self.sz[val2]:
-			self.id[val2] = val1
-			self.sz[val1] += self.sz[val2]
-		else:
-			self.id[val1] = val2
-			self.sz[val2] += self.sz[val1]
-		self.num -= 1
+  def __init__(self, n):
+    self.data = [x for x in range(n)]
+    self.id = [x for x in range(n)]
+    self.num = n # number of disjoint sets
+    self.sz = [1 for x in range(n)]
+    self.n = n
+  def findRoot(self, val):
+    while val != self.id[val]:
+      self.id[val] = self.id[self.id[val]]
+      val = self.id[val]
+    return val
+  def union(self, val1, val2):
+    val1 = self.findRoot(val1)
+    val2 = self.findRoot(val2)
+    if val1 == val2:
+      return
+    if self.sz[val1] > self.sz[val2]:
+      self.id[val2] = val1
+      self.sz[val1] += self.sz[val2]
+    else:
+      self.id[val1] = val2
+      self.sz[val2] += self.sz[val1]
+    self.num -= 1
 
-	def find(self, val1, val2):
-		val1 = self.findRoot(val1)
-		val2 = self.findRoot(val2)
-		return val1 == val2
+  def find(self, val1, val2):
+    val1 = self.findRoot(val1)
+    val2 = self.findRoot(val2)
+    return val1 == val2
 
-test = 	DisjointSet(10)
-print test.id
-test.union(3, 4)
-print '3 - 4'
-print test.id
-print test.sz
+def main():
+  #g=sys.stdin
+  g = open("FOXLINGS", "r") 
+  s=g.read().splitlines()
+  while '' in s: s.remove('')
+  while '\n' in s: s.remove('\n')
 
-test.union(4,9)
-print '4 - 9'
-print test.id
-print test.sz
+  l1 = s[0].split( )
+  num_nodes = int(l1[0])
+  num_edges = int(l1[1])
+  edges = []
+  for edge in range(1, num_edges + 1):
+    l = s[edge].split( )
+    edges.append((int(l[0]) - 1, int(l[1]) - 1))
 
-test.union(2, 3)
-print '2 - 3'
-print test.id
-print test.sz
-print test.num
-test.union(2,2)
-print test.id
-print test.find(4, 9)
-	
+  djSet = DisjointSet(num_nodes)
+  for val1, val2 in edges:
+    djSet.union(val1, val2)
+  print djSet.num
+   
+if __name__ == '__main__':
+  main()
+
+
+  

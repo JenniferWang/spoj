@@ -5,11 +5,13 @@ class DisjointSet():
     self.root = [x for x in xrange(n)]
     self.num = n # number of disjoint sets
     self.sz = [1 for x in xrange(n)]
+
   def findRoot(self, val):
     while val != self.root[val]:
       self.root[val] = self.root[self.root[val]]
       val = self.root[val]
     return val
+    
   def union(self, val1, val2):
     val1 = self.findRoot(val1)
     val2 = self.findRoot(val2)
@@ -29,8 +31,8 @@ class DisjointSet():
     return val1 == val2
 
 def main():
-  #g=sys.stdin
-  g = open("FOXLINGS", "r") 
+  g=sys.stdin
+  #g = open("FOXLINGS", "r") 
   s=g.read().splitlines()
   while '' in s: s.remove('')
   while '\n' in s: s.remove('\n')

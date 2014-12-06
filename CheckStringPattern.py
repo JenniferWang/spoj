@@ -14,17 +14,37 @@
 # 4) S = "zzxzzyzzx"
 
 def checkIsMultiplication(string):
-	for length in xrange(1, len(string)):
-		newString = string + string[:length]
-		if newString.find(string, 1, len(newString)) > 0:
-			return True
-	return False
+	"""
+	I wouldn’t like having this question in an interview, 
+	because I think this is a kind of “Uh huh! This is the trick!” question.
+	
+	Let’s take "zzxzzxzzx" as an example. 
+	If the string can be written as nS, where n > 1, then its suffix is (n-1) * S.
+ 	
+ 	ZZXZZXZZX 
+     ZZXZZX
+	
+	Now, we need to add the S to the end somehow. We don’t know the actual length, 
+	so we add the whole original string instead, i.e. we take the original string twice.
 
-# print checkIsMultiplication("abab")
-# print checkIsMultiplication("abcdabcd")
-# print checkIsMultiplication("abcabcabc")
-# print checkIsMultiplication("zzxzzxzzx")
+	ZZXZZXZZXZZXZZXZZX
+
+	Now, to get |S|, simply search for the position of the original string starting at 
+	the second character (string search is a common function in all languages). 
+	If it returns |original string|, it means it found the concatenated string and we 
+	simply return False. Otherwise, |S| != |original string|, therefore original string = n*S 
+	and we return True.
+	"""
+	newString = string * 2
+	if newString.find(string, 1, len(newString)) == len(string):
+			return False
+	return True
+
+print checkIsMultiplication("abab")
+print checkIsMultiplication("abcdabcd")
+print checkIsMultiplication("abcabcabc")
+print checkIsMultiplication("zzxzzxzzx")
 print checkIsMultiplication("abac")
-# print checkIsMultiplication("abcdabbd")
-# print checkIsMultiplication("abcabcefg")
-# print checkIsMultiplication("zzxzzyzzx")
+print checkIsMultiplication("abcdabbd")
+print checkIsMultiplication("abcabcefg")
+print checkIsMultiplication("zzxzzyzzx")

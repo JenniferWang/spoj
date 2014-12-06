@@ -9,14 +9,14 @@ class SingleLinkedList(Node):
 		while pt:
 			print pt.val,
 			pt = pt.next
+		print 'none'
 
-	def quickSort(self, head, end):
+	def partition(self, head, end):
 		if not head or head == end:
-			return
+			return None
 
 		pt = head
 		pivot = end
-
 		dummy = Node(0)
 		dummy.next = head
 		pt = head
@@ -31,25 +31,35 @@ class SingleLinkedList(Node):
 				pivot.next = pt
 				pt2.next = tmp
 				pt = pt2.next
-
 			else:
 				pt = pt.next
 				pt2 = pt2.next
+		head = dummy.next
+		self.printList(head)
+		print pt2.val
+		print pt.val
+		return pivot
 
-		if dummy.next != pivot:
-			self.quickSort(head, pt2)
+	def quickSort(self, head, end):
+		pivot = self.partition(head, end)
+		if not pivot:
+			return
+		if prePivot.next != head:
+			self.quickSort(head, prePivot)
+		if prePivot.next and prePivot.next.next:
+			self.quickSort(prePivot.next.next, end)
 
-		if pivot.next:
-			self.quickSort(pt.next, newEnd)
-	
 		
-head = Node(0)
-n1 = Node(1)
-n2 = Node(2)
+head = Node(9)
+n1 = Node(8)
+n2 = Node(7)
 n3 = Node(3)
 head.next = n1; n1.next = n2; n2.next = n3
 sol = SingleLinkedList(head)
 sol.printList(head)
-sol.quickSort(head, n3)
-sol.printList(head)
+print
+sol.partition(head, n3)
+
+#sol.quickSort(head, n3)
+
 

@@ -52,3 +52,17 @@ def generateFromGenerator(n, m):
 	return result
 
 print generateFromGenerator(7, 5)
+
+def generateFromUnknownGenerator(generator):
+	"""
+	Given a unknown random generator which can generate 1 with prob = p, 0 with 
+	prob = 1 - p
+	write a random number generator to generate 1 and 0 with prob = 0.5
+
+	while True:
+		generate A
+		generate B', if B' = 0: B = 1; if B' = 1: B = 0
+		if (A, B) == (0, 0): return 0
+		if (A, B) == (1, 1): return 1
+	"""
+	pass

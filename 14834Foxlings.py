@@ -29,8 +29,8 @@ class DisjointSet():
     return self.num
 
 def main():
-  #g=sys.stdin
-  g = open("FOXLINGS", "r") 
+  g=sys.stdin
+  #g = open("FOXLINGS", "r") 
   s=g.read().splitlines()
   while '' in s: s.remove('')
   while '\n' in s: s.remove('\n')
@@ -43,7 +43,7 @@ def main():
     l = s[edge].split( )
     djSet.union(int(l[0]) - 1, int(l[1]) - 1)
 
-  print djSet.x`getNumOfDisjointSet()
+  print djSet.getNumOfDisjointSet()
    
 if __name__ == '__main__':
   main()

@@ -2,26 +2,41 @@ class Board():
   def __init__(self, board):
     self.board = board
 
-  def findMaxProductGyz(self):
+  def findMaxProduct(self):
     if not self.board:
-      return 1
-    max_prods = [1]
-    min_prods = [1]    
+      return
+    maxProds = []
+    minProds = []
+
     for row in self.board:
-      last_max_prods = max_prods
-      last_min_prods = min_prods
-      max_prods = []
-      min_prods = [] 
-      for col_ind, cell_val in enumerate(row):
-        potential_prods = []
-        if max_prods: 
-          potential_prods += [cell_val * max_prods[-1], cell_val * min_prods[-1]]
-        if len(last_max_prods) > col_ind:
-          potential_prods.append(cell_val * last_max_prods[col_ind])
-          potential_prods.append(cell_val * last_min_prods[col_ind])
-        max_prods.append(max(potential_prods))
-        min_prods.append(min(potential_prods))
-    return max_prods[-1]
+      pre_max = maxProds
+      pre_min = minProds
+      maxProds = []
+      minProds = []
+      for colIdx, cell in enumerate(row):
+        if pre_max and maxProds:
+          if cell > 0:
+            maxProds.append(max(cell * pre_max[colIdx], cell * maxProds[-1]))
+            minProds.append(min(cell * pre_min[colIdx], cell * minProds[-1]))
+          else:
+            maxProds.append(max(cell * pre_min[colIdx], cell * minProds[-1]))
+            maxProds.append(min(cell * pre_max[colIdx], cell * maxProds[-1]))
+        elif pre_max:
+          if cell > 0:
+            maxProds.append(cell * pre_max[colIdx])
+            minProds.append(cell * pre_min[colIdx])
+          else:
+            maxProds.append(cell * pre_min[colIdx])
+            minProds.append(cell * pre_max[colIdx])
+        else:
+          if cell > 0:
+            maxProds.append(cell)
+            minProds.append(float('inf'))
+          else:
+            maxProds.append(float('-inf'))
+            minProds.append(cell)
+
+    return max(maxProds[-1], minProds[-1]) 
 
 def test():
   boards = [ 
@@ -37,9 +52,9 @@ def test():
   ]
   ans = [1, 0, -1, 9, 6, 12, -8, 9*8*7*4*1, -1*2*3*6*9]
   for i, board in enumerate(boards):
-    if Board(board).findMaxProductGyz() == ans[i]:
+    if Board(board).findMaxProduct() == ans[i]:
       continue
-    print board, ans[i], Board(board).findMaxProductGyz()
+    print board, ans[i], Board(board).findMaxProduct()
 
 
 if __name__ == '__main__':

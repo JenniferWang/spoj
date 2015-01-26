@@ -92,22 +92,27 @@ void Graph::printSCCs(){
 }
 
 int main(int argc, char *argv[]){
-  // int u, v;
-  // int num_v;
-  // int num_e;
-  // cin >> num_v >> num_e;
-  // Graph g(num_v);
-  // for (int i = 0; i < num_e; i ++){
-  //   cin >> u >> v;
-  //   g.add_edge(u, v);
-  // }
+  int u, v;
+  int num_v;
+  int num_e;
+  FILE* file = stdin;
+  if (argc == 2){
+    file = fopen(argv[1], "r");
+  }
   
-  Graph g(5);
-  g.add_edge(1, 0);
-  g.add_edge(0, 2);
-  g.add_edge(2, 1);
-  g.add_edge(0, 3);
-  g.add_edge(3, 4);
+  fscanf(file, "%d %d", &num_v, &num_e);
+  Graph g(num_v);
+  for (int i = 0; i < num_e; i ++){
+    fscanf(file, "%d %d", &u, &v);
+    g.add_edge(u, v);
+  }
+  
+  // Graph g(5);
+  // g.add_edge(1, 0);
+  // g.add_edge(0, 2);
+  // g.add_edge(2, 1);
+  // g.add_edge(0, 3);
+  // g.add_edge(3, 4);
   cout << "Following are strongly connected components in given graph \n";
   g.printSCCs();
   return 0;
